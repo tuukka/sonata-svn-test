@@ -942,7 +942,7 @@ class Base(mpdclient3.mpd_connection):
 		if self.window_owner:
 			icon = self.window.render_icon('sonata', gtk.ICON_SIZE_DIALOG)
 			self.window.set_icon(icon)
-
+		
 		self.streams_populate()
 
 		self.iterate_now()
@@ -952,6 +952,9 @@ class Base(mpdclient3.mpd_connection):
 					self.window.set_no_show_all(True)
 					self.window.hide()
 		self.window.show_all()
+		
+		# Ensure that button images are displayed despite GTK+ theme
+		self.window.get_settings().set_property("gtk-button-images", True)
 
 		if self.update_on_start:
 			self.updatedb(None)
@@ -1212,7 +1215,6 @@ class Base(mpdclient3.mpd_connection):
 					# Systemtray gone, unwithdraw app:
 					self.withdraw_app_undo()
 			elif HAVE_EGG:
-				print self.trayicon.get_property('visible')
 				if self.trayicon.get_property('visible') == False:
 					# Systemtray appears, add icon:
 					self.initialize_systrayicon()
