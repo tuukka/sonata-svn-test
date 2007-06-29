@@ -14,9 +14,9 @@ class socket_talker(object):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.settimeout(3)
         try:
-       		self.sock.connect((host, port))
+       	    self.sock.connect((host, port))
        	except socket.error, msg:
-       		print 'Cannot connect to MPD:', msg[1]
+       	    print 'Cannot connect to MPD:', msg[1]
         self.file = self.sock.makefile("rb+")
         self.current_line = ''
         self.ack = ''
@@ -332,9 +332,8 @@ def connect(**kw):
     password, host = parse_host(os.environ.get('MPD_HOST', 'localhost'))
     host = kw.get('host', host)
     password = kw.get('password', password)
-
+    
     conn = mpd_connection(host, port, password)
-    #if password:
-    #    conn.password(password)
+    if password:
+        conn.password(password)
     return conn
-
