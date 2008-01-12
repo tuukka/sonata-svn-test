@@ -3411,21 +3411,19 @@ class Base(mpdclient3.mpd_connection):
 				   
 	def _do_scrobbler_np(self):
 		self.scrobbler_init()
-		if self.use_scrobbler and self.songinfo:
+		if self.use_scrobbler and self.scrob_post and self.songinfo:
 			if self.songinfo.has_key('artist') and \
 			   self.songinfo.has_key('title') and \
 			   self.songinfo.has_key('time'):
-			   	if not self.songinfo.has_key('album'):
-			   		album = u''
-			   	else:
-			   		album = self.songinfo['album']
-			   	if not self.songinfo.has_key('track'):
-			   		tracknumber = u''
-			   	else:
-			   		tracknumber = self.songinfo['track']
-		
-		if self.scrob_post:
-			self.scrob_post.nowplaying(self.songinfo['artist'],
+				if not self.songinfo.has_key('album'):
+					album = u''
+				else:
+					album = self.songinfo['album']
+				if not self.songinfo.has_key('track'):
+					tracknumber = u''
+				else:
+					tracknumber = self.songinfo['track']
+				self.scrob_post.nowplaying(self.songinfo['artist'],
 									  		self.songinfo['title'],
 									  		self.songinfo['time'],
 									  		tracknumber,
@@ -3435,19 +3433,19 @@ class Base(mpdclient3.mpd_connection):
 		
 	def scrobbler_post(self):
 		self.scrobbler_init()
-		if self.scrob_post and self.prevsonginfo:
+		if self.use_scrobbler and self.scrob_post and self.prevsonginfo:
 			if self.prevsonginfo.has_key('artist') and \
 			   self.prevsonginfo.has_key('title') and \
 			   self.prevsonginfo.has_key('time'):
-			   	if not self.prevsonginfo.has_key('album'):
-			   		album = u''
-			   	else:
-			   		album = self.prevsonginfo['album']
-			   	if not self.prevsonginfo.has_key('track'):
-			   		tracknumber = u''
-			   	else:
-			   		tracknumber = self.prevsonginfo['track']
-			   	self.scrob_post.addtrack(self.prevsonginfo['artist'],
+				if not self.prevsonginfo.has_key('album'):
+					album = u''
+				else:
+					album = self.prevsonginfo['album']
+				if not self.prevsonginfo.has_key('track'):
+					tracknumber = u''
+				else:
+					tracknumber = self.prevsonginfo['track']
+				self.scrob_post.addtrack(self.prevsonginfo['artist'],
 										  		self.prevsonginfo['title'],
 										  		self.prevsonginfo['time'],
 										  		self.scrob_start_time,
