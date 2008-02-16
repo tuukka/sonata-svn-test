@@ -2210,7 +2210,7 @@ class Base(mpdclient3.mpd_connection):
 		# Populates the library list with entries starting at root
 		if not self.conn:
 			return
-
+			
 		# Handle special cases (i.e. if we are browsing to a song or
 		# if the path has disappeared). Typically we will keep on
 		# traversing up the hierarchy until we find items that 
@@ -2255,7 +2255,7 @@ class Base(mpdclient3.mpd_connection):
 				else:
 					break
 			lsinfo = self.conn.do.lsinfo(root)
-				
+		
 		prev_selection = []
 		prev_selection_root = False
 		prev_selection_parent = False
@@ -2968,10 +2968,8 @@ class Base(mpdclient3.mpd_connection):
 		if path is None: 
 			# Default to last item in selection:
 			model, selected = self.browser_selection.get_selected_rows()
-			if len(selected) >=1:
-				path = (len(selected)-1,)
-			elif len(model) > 0:
-				path = (0,)
+			if len(selected) >= 1:
+				path = selected[0]
 			else:
 				return
 		value = self.browserdata.get_value(self.browserdata.get_iter(path), 1)
