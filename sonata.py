@@ -24,8 +24,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import sonata
+from sonata import main
 import sys
+
 try:
 	import dbus
 	import dbus.service
@@ -40,13 +41,13 @@ if __name__ == "__main__":
 		try:
 			session_bus = dbus.SessionBus()
 			bus_name = dbus.service.BusName('org.MPD', bus=session_bus)
-			app = sonata.BaseDBus(bus_name, '/org/MPD/Sonata')
+			app = main.BaseDBus(bus_name, '/org/MPD/Sonata')
 		except SystemExit:
 			sys.exit()
 		except:
-			app = sonata.Base()
+			app = main.Base()
 	else:
-		app = sonata.Base()
+		app = main.Base()
 	try:
 		app.main()
 	except KeyboardInterrupt:
