@@ -308,9 +308,9 @@ class Base:
 					if a in cli_args:
 						self.single_connect_for_passed_arg(a)
 					else:
- 						self.print_usage()
- 					sys.exit()
- 		
+						self.print_usage()
+					sys.exit()
+		
 		if not HAVE_EGG and not HAVE_STATUS_ICON:
 			print _("PyGTK+ 2.10 or gnome-python-extras not found, system tray support disabled.")
 
@@ -599,7 +599,7 @@ class Base:
 			    <menuitem action="addmenu"/>
 			    <menuitem action="replacemenu"/>
 			    <menu action="playaftermenu">
-	  	          <menuitem action="add2menu"/>
+			      <menuitem action="add2menu"/>
 			      <menuitem action="replace2menu"/>
 			    </menu>
 			    <menuitem action="newmenu"/>
@@ -699,7 +699,7 @@ class Base:
 			self.window = window
 			self.window_owner = False
 
- 		if self.window_owner:
+		if self.window_owner:
 			self.window.set_title('Sonata')
 			self.window.set_role('mainWindow')
 			self.window.set_resizable(True)
@@ -2203,7 +2203,7 @@ class Base:
 			dialog.set_title(_("Edit Stream"))
 		else:
 			dialog.set_title(_("New Stream"))
- 		hbox = gtk.HBox()
+		hbox = gtk.HBox()
 		namelabel = ui.label(text=_('Stream name') + ':')
 		hbox.pack_start(namelabel, False, False, 5)
 		nameentry = ui.entry()
@@ -2835,7 +2835,7 @@ class Base:
 
 		# Select and focus previously selected item if it's not ".." or "/"
 		if select_items:
- 			if self.lib_view == self.VIEW_ARTIST:
+			if self.lib_view == self.VIEW_ARTIST:
 				if self.lib_level == self.LIB_LEVEL_ARTIST:
 					item = "/"
 				elif self.lib_level == self.LIB_LEVEL_ALBUM:
@@ -3339,7 +3339,7 @@ class Base:
 		if self.on_button_press(widget, event, True): return True
 
 	def on_playlists_button_press(self, widget, event):
-		if self.on_button_press(widget, event,	False): return True
+		if self.on_button_press(widget, event, False): return True
 
 	def on_streams_button_press(self, widget, event):
 		if self.on_button_press(widget, event, False): return True
@@ -3790,7 +3790,7 @@ class Base:
 					self.scrob_last_prepared = mpdh.get(self.songinfo, 'file')
 			
 	def scrobbler_np(self):
-	   	thread = threading.Thread(target=self.scrobbler_do_np)
+		thread = threading.Thread(target=self.scrobbler_do_np)
 		thread.setDaemon(True)
 		thread.start()
 				   
@@ -3809,12 +3809,12 @@ class Base:
 				else:
 					tracknumber = mpdh.get(self.songinfo, 'track')
 				self.scrob_post.nowplaying(mpdh.get(self.songinfo, 'artist'),
-									  		mpdh.get(self.songinfo, 'title'),
-									  		mpdh.get(self.songinfo, 'time'),
-									  		tracknumber,
-									  		album,
-									  		self.scrob_start_time)
-		time.sleep(10)		
+									 		mpdh.get(self.songinfo, 'title'),
+									 		mpdh.get(self.songinfo, 'time'),
+									 		tracknumber,
+									 		album,
+									 		self.scrob_start_time)
+		time.sleep(10)
 		
 	def scrobbler_post(self):
 		self.scrobbler_init()
@@ -3831,12 +3831,12 @@ class Base:
 				else:
 					tracknumber = mpdh.get(self.prevsonginfo, 'track')
 				self.scrob_post.addtrack(mpdh.get(self.prevsonginfo, 'artist'),
-										  		mpdh.get(self.prevsonginfo, 'title'),
-										  		mpdh.get(self.prevsonginfo, 'time'),
-										  		self.scrob_start_time,
-										  		tracknumber,
-										  		album)
-										  		
+										 		mpdh.get(self.prevsonginfo, 'title'),
+										 		mpdh.get(self.prevsonginfo, 'time'),
+										 		self.scrob_start_time,
+										 		tracknumber,
+										 		album)
+										 		
 				thread = threading.Thread(target=self.scrobbler_do_post)
 				thread.setDaemon(True)
 				thread.start()
@@ -3851,7 +3851,7 @@ class Base:
 			try:
 				self.scrob_post.post()
 			except audioscrobbler.AudioScrobblerConnectionError, e:
-				print e	
+				print e
 				pass
 			time.sleep(10)
 	
@@ -4581,33 +4581,33 @@ class Base:
 		self.trayprogressbar.set_text(self.progressbar.get_text())
 
 	def update_infofile(self):
- 		if self.use_infofile is True:
- 			try:
- 				info_file = open(self.infofile_path, 'w')
+		if self.use_infofile is True:
+			try:
+				info_file = open(self.infofile_path, 'w')
 
- 				if self.status['state'] in ['play']:
- 					info_file.write('Status: ' + 'Playing' + '\n')
- 				elif self.status['state'] in ['pause']:
- 					info_file.write('Status: ' + 'Paused' + '\n')
+				if self.status['state'] in ['play']:
+					info_file.write('Status: ' + 'Playing' + '\n')
+				elif self.status['state'] in ['pause']:
+					info_file.write('Status: ' + 'Paused' + '\n')
 				elif self.status['state'] in ['stop']:
- 					info_file.write('Status: ' + 'Stopped' + '\n')
- 				try:
- 					info_file.write('Title: ' + mpdh.get(self.songinfo, 'artist') + ' - ' + mpdh.get(self.songinfo, 'title') + '\n')
- 				except:
- 					try:
- 	 					info_file.write('Title: ' + mpdh.get(self.songinfo, 'title') + '\n') # No Arist in streams
- 					except:
- 						info_file.write('Title: No - ID Tag\n')
+					info_file.write('Status: ' + 'Stopped' + '\n')
+				try:
+					info_file.write('Title: ' + mpdh.get(self.songinfo, 'artist') + ' - ' + mpdh.get(self.songinfo, 'title') + '\n')
+				except:
+					try:
+						info_file.write('Title: ' + mpdh.get(self.songinfo, 'title') + '\n') # No Arist in streams
+					except:
+						info_file.write('Title: No - ID Tag\n')
 				info_file.write('Album: ' + mpdh.get(self.songinfo, 'album', 'No Data') + '\n')
 				info_file.write('Track: ' + mpdh.get(self.songinfo, 'track', '0') + '\n')
- 				info_file.write('File: ' + mpdh.get(self.songinfo, 'file', 'No Data') + '\n')
+				info_file.write('File: ' + mpdh.get(self.songinfo, 'file', 'No Data') + '\n')
 				info_file.write('Time: ' + mpdh.get(self.songinfo, 'time', '0') + '\n')
- 				info_file.write('Volume: ' + self.status['volume'] + '\n')
- 				info_file.write('Repeat: ' + self.status['repeat'] + '\n')
- 				info_file.write('Random: ' + self.status['random'] + '\n')
- 				info_file.close()
- 			except:
- 				pass
+				info_file.write('Volume: ' + self.status['volume'] + '\n')
+				info_file.write('Repeat: ' + self.status['repeat'] + '\n')
+				info_file.write('Random: ' + self.status['random'] + '\n')
+				info_file.close()
+			except:
+				pass
 
 	#################
 	# Gui Callbacks #
@@ -5525,7 +5525,7 @@ class Base:
 		if key_press:
 			shortcut = gtk.accelerator_name(event.keyval, event.state)
 			shortcut = shortcut.replace("<Mod2>", "")
-			if shortcut != 'Escape':				
+			if shortcut != 'Escape':
 				return
 		self.fullscreencoverart.hide()
 
@@ -5583,7 +5583,7 @@ class Base:
 			# This prevents the tooltip from popping up again until the user
 			# leaves and enters the trayicon again
 			#if self.traytips.notif_handler == None and self.traytips.notif_handler != -1:
-			#	self.traytips._remove_timer()
+				#self.traytips._remove_timer()
 			gobject.timeout_add(100, self.tooltip_set_ignore_toggle_signal_false)
 
 	def tooltip_show_manually(self):
@@ -6000,7 +6000,7 @@ class Base:
 		mpd_table.attach(ui.label(), 1, 3, 12, 13, gtk.FILL|gtk.EXPAND, gtk.FILL|gtk.EXPAND, 30, 0)
 		mpd_table.attach(ui.label(), 1, 3, 13, 14, gtk.FILL|gtk.EXPAND, gtk.FILL|gtk.EXPAND, 30, 0)
 		mpd_table.attach(ui.label(), 1, 3, 14, 15, gtk.FILL|gtk.EXPAND, gtk.FILL|gtk.EXPAND, 30, 0)
- 		# Extras tab
+		# Extras tab
 		if not audioscrobbler is not None:
 			self.as_enabled = False
 		as_label = ui.label(markup='<b>' + _('Extras') + '</b>')
@@ -6408,10 +6408,10 @@ class Base:
 					self.client.crossfade(0)
 			if self.infofile_path != infopath_options.get_text():
 				self.infofile_path = os.path.expanduser(infopath_options.get_text())
- 				if self.use_infofile: self.update_infofile()
- 			if not using_mpd_env_vars:
+				if self.use_infofile: self.update_infofile()
+			if not using_mpd_env_vars:
 				if self.prev_host != self.host[self.profile_num] or self.prev_port != self.port[self.profile_num] or self.prev_password != self.password[self.profile_num]:
-	 				# Try to connect if mpd connection info has been updated:
+					# Try to connect if mpd connection info has been updated:
 					ui.change_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
 					self.mpd_connect(force=True)
 			if self.as_enabled:
@@ -6496,7 +6496,7 @@ class Base:
 		new_model.clear()
 		profile_combo.set_model(new_model)
 		for i in range(len(self.profile_names)):
-			if len(self.profile_names[i])	> 15:
+			if len(self.profile_names[i]) > 15:
 				profile_combo.append_text("[" + str(i+1) + "] " + self.profile_names[i][:15] + "...")
 			else:
 				profile_combo.append_text("[" + str(i+1) + "] " + self.profile_names[i])
@@ -6656,7 +6656,7 @@ class Base:
 		if button.get_active():
 			infofileformatbox.set_sensitive(True)
 			self.use_infofile = True
- 			self.update_infofile()
+			self.update_infofile()
 		else:
 			infofileformatbox.set_sensitive(False)
 			self.use_infofile = False
@@ -6693,14 +6693,14 @@ class Base:
 				for hbox in self.info_boxes_in_more:
 					ui.hide(hbox)
 		elif type == 'edit':
-	 		if self.songinfo:
- 				self.on_tags_edit(widget)
- 		elif type == 'search':
- 			self.on_lyrics_search(None)
- 		elif type == 'editlyrics':
- 			misc.browser_load("http://lyricwiki.org/index.php?title=" + urllib.quote(misc.capwords(mpdh.get(self.songinfo, 'artist'))) + ":" + urllib.quote(misc.capwords(mpdh.get(self.songinfo, 'title'))) + "&action=edit", self.url_browser, self.window)
- 	
- 	def on_tab_click(self, widget, event):
+			if self.songinfo:
+				self.on_tags_edit(widget)
+		elif type == 'search':
+			self.on_lyrics_search(None)
+		elif type == 'editlyrics':
+			misc.browser_load("http://lyricwiki.org/index.php?title=" + urllib.quote(misc.capwords(mpdh.get(self.songinfo, 'artist'))) + ":" + urllib.quote(misc.capwords(mpdh.get(self.songinfo, 'title'))) + "&action=edit", self.url_browser, self.window)
+	
+	def on_tab_click(self, widget, event):
 		if event.button == 3:
 			self.notebookmenu.popup(None, None, None, 1, 0)
 			return True
@@ -6918,16 +6918,16 @@ class Base:
 			elif os.path.exists(os.path.join(os.path.split(__file__)[0], 'pixmaps', filename)):
 				full_filename = os.path.join(os.path.split(__file__)[0], 'pixmaps', filename)
 			elif os.path.exists(os.path.join(os.path.split(__file__)[0], 'share', filename)):
-	 			full_filename = os.path.join(os.path.split(__file__)[0], 'share', filename)
+				full_filename = os.path.join(os.path.split(__file__)[0], 'share', filename)
 			elif os.path.exists(os.path.join(__file__.split('/lib')[0], 'share', 'pixmaps', filename)):
-	 			full_filename = os.path.join(__file__.split('/lib')[0], 'share', 'pixmaps', filename)
+				full_filename = os.path.join(__file__.split('/lib')[0], 'share', 'pixmaps', filename)
 			elif os.path.exists(os.path.join(sys.prefix, 'share', 'pixmaps', filename)):
 				full_filename = os.path.join(sys.prefix, 'share', 'pixmaps', filename)
-	 	if not full_filename:
-	 		print filename + " cannot be found. Aborting..."
-	 		sys.exit(1)
- 		return full_filename
- 	
+		if not full_filename:
+			print filename + " cannot be found. Aborting..."
+			sys.exit(1)
+		return full_filename
+	
 	def on_tags_edit(self, widget):
 		# Try loading module
 		global tagpy
@@ -6942,8 +6942,8 @@ class Base:
 					pass
 			except:
 				pass
- 		if tagpy is None:
- 			ui.show_msg(self.window, _("Taglib and/or tagpy not found, tag editing support disabled."), _("Edit Tags"), 'editTagsError', gtk.BUTTONS_CLOSE, response_cb=self.dialog_destroy)
+		if tagpy is None:
+			ui.show_msg(self.window, _("Taglib and/or tagpy not found, tag editing support disabled."), _("Edit Tags"), 'editTagsError', gtk.BUTTONS_CLOSE, response_cb=self.dialog_destroy)
 			return
 		if not os.path.isdir(misc.file_from_utf8(self.musicdir[self.profile_num])):
 			ui.show_msg(self.window, _("The path") + " " + self.musicdir[self.profile_num] + " " + _("does not exist. Please specify a valid music directory in preferences."), _("Edit Tags"), 'editTagsError', gtk.BUTTONS_CLOSE, response_cb=self.dialog_destroy)
@@ -7034,11 +7034,11 @@ class Base:
 		yearlabel = ui.label(text="  " + _("Year") + ":", x=1)
 		yearentry = ui.entry(w=50)
 		handlerid = yearentry.connect("insert_text", self.tags_win_entry_constraint, True)
- 		yearentry.set_data('handlerid', handlerid)
+		yearentry.set_data('handlerid', handlerid)
 		tracklabel = ui.label(text="  " + _("Track") + ":", x=1)
 		trackentry = ui.entry(w=50)
 		handlerid2 = trackentry.connect("insert_text", self.tags_win_entry_constraint, False)
- 		trackentry.set_data('handlerid2', handlerid2)
+		trackentry.set_data('handlerid2', handlerid2)
 		yearbutton = ui.button()
 		yearbuttonvbox = gtk.VBox()
 		self.tags_win_create_apply_all_button(yearbutton, yearbuttonvbox, yearentry)
@@ -7603,7 +7603,7 @@ class Base:
 			gobject.remove_source(self.libfilterbox_source)
 		except:
 			pass
-		self.libfilterbox_source = gobject.timeout_add(300, self.libsearchfilter_start_loop, editable)		
+		self.libfilterbox_source = gobject.timeout_add(300, self.libsearchfilter_start_loop, editable)
 	
 	def libsearchfilter_start_loop(self, editable):
 		self.libfilterbox_cond.acquire()
@@ -7947,7 +7947,7 @@ if HAVE_DBUS:
 			if HAVE_GNOME_MMKEYS:
 				settingsDaemonInterface.connect_to_signal('MediaPlayerKeyPressed', self.mediaPlayerKeysCallback)
 
- 		def mediaPlayerKeysCallback(self, app, key):
+		def mediaPlayerKeysCallback(self, app, key):
 			if app == 'Sonata':
 				if key in ('Play', 'PlayPause', 'Pause'):
 					self.mpd_pp(None)
