@@ -86,6 +86,8 @@ class Config:
 		self.art_location = consts.ART_LOCATION_HOMECOVERS
 		self.art_location_custom_filename = ""
 		self.lyrics_location = consts.LYRICS_LOCATION_HOME
+		
+		self.tags_use_mpdpath = False
 
 		self.as_enabled = False
 		self.as_username = ""
@@ -301,6 +303,10 @@ class Config:
 				self.currsongformat1 = conf.get('currformat', 'currsong1')
 			if conf.has_option('currformat', 'currsong2'):
 				self.currsongformat2 = conf.get('currformat', 'currsong2')
+		
+		if conf.has_section('tags'):
+			if conf.has_option('tags', 'use_mpdpaths'):
+				self.tags_use_mpdpath = conf.getboolean('tags', 'use_mpdpaths')
 
 		if conf.has_option('streams', 'num_streams'):
 			num_streams = conf.getint('streams', 'num_streams')
@@ -451,6 +457,10 @@ class Config:
 		conf.set('audioscrobbler', 'use_audioscrobbler', self.as_enabled)
 		conf.set('audioscrobbler', 'username', self.as_username)
 		conf.set('audioscrobbler', 'password_md5', self.as_password_md5)
+		
+		# Tag editor
+		conf.add_section('tags')
+		conf.set('tags', 'use_mpdpaths', self.tags_use_mpdpath)
 
 		conf.write(file(os.path.expanduser('~/.config/sonata/sonatarc'), 'w'))
 
