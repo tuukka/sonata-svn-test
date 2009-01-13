@@ -105,6 +105,8 @@ class Config:
 		self.playlists_tab_visible = True
 		self.streams_tab_visible = True
 		self.info_tab_visible = True
+		
+		self.art_cache = []
 
 		# these mirror Main.notebook tab nums
 		self.current_tab_pos = 0
@@ -463,4 +465,3 @@ class Config:
 		conf.set('tags', 'use_mpdpaths', self.tags_use_mpdpath)
 
 		conf.write(file(os.path.expanduser('~/.config/sonata/sonatarc'), 'w'))
-
