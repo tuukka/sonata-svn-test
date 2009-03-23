@@ -185,6 +185,8 @@ class Base(object):
 		if self.config.autoconnect:
 			self.user_connect = True
 		args.apply_profile_arg(self)
+
+		self.notebook_show_first_tab = not self.config.tabs_expanded or self.config.withdrawn
 			
 		# Add some icons, assign pixbufs:
 		self.iconfactory = gtk.IconFactory()
@@ -788,7 +790,6 @@ class Base(object):
 		#for tabs in pluginsystem.get('tabs'):
 		#	self.new_tab(*tabs())
 		
-		self.notebook_show_first_tab = not self.config.tabs_expanded or self.config.withdrawn
 
 	def new_tab(self, page, stock, text, focus):
 		# create the "ear" of the tab:
